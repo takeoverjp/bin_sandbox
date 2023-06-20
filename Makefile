@@ -1,3 +1,4 @@
+.PHONY: all clean dump
 all: a.out
 clean:
 	rm -rf a.out lib*.so
@@ -10,3 +11,6 @@ libb.so: libb.c
 
 a.out: main.c liba.so
 	gcc $< -o $@ -la -L. -Wl,-rpath-link,.
+
+dump: a.out liba.so libb.so
+	readelf -d $^
