@@ -14,3 +14,9 @@ a.out: main.c liba.so
 
 dump: a.out liba.so libb.so
 	readelf -d $^
+
+use_after_freed_stack: use_after_freed_stack.c
+	gcc -g -O0 $< -o $@
+
+valgrind: use_after_freed_stack
+	 valgrind --leak-check=full --leak-resolution=high ./use_after_freed_stack
